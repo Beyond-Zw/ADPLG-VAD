@@ -52,6 +52,22 @@ if __name__ == "__main__":
             shuffle = False, num_workers = config.num_workers,
             worker_init_fn = worker_init_fn)
 
+    # normal_train_loader = DataLoaderX(
+    #     XDVideo_CLIP(root_dir = config.root_dir, mode = 'Train',modal = config.modal, num_segments = config.num_segments, len_feature = config.len_feature, is_normal = True),
+    #         batch_size = config.batch_size,
+    #         shuffle = True, num_workers = config.num_workers,
+    #         worker_init_fn = worker_init_fn, drop_last = True)
+    # abnormal_train_loader = DataLoaderX(
+    #     XDVideo_CLIP(root_dir = config.root_dir, mode='Train', modal = config.modal, num_segments = config.num_segments, len_feature = config.len_feature, is_normal = False),
+    #         batch_size = config.batch_size,
+    #         shuffle = True, num_workers = config.num_workers,
+    #         worker_init_fn = worker_init_fn, drop_last = True)
+    # test_loader = DataLoaderX(
+    #     XDVideo_CLIP(root_dir = config.root_dir, mode = 'Test', modal = config.modal, num_segments = config.num_segments, len_feature = config.len_feature),
+    #         batch_size = 5,
+    #         shuffle = False, num_workers = config.num_workers,
+    #         worker_init_fn = worker_init_fn)
+
     test_info = {"step": [], "auc": [],"ap":[],"ac":[]}
 
     optimizer_v = torch.optim.Adam(net_v.parameters(), lr = config.lr_v[0], betas = (0.9, 0.999), weight_decay = 0.005)
