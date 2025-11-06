@@ -23,9 +23,14 @@ Extensive experiments on three benchmark datasets (UCF-Crime, XD-Violence, Shang
 
 Please download the datasets from the following links:
 
+I3D Features:
 - **[UCF-Crime](https://github.com/Roc-Ng/DeepMIL)**
 - **[XD-Violence](https://roc-ng.github.io/XD-Violence/)**
 - **[ShanghaiTech](https://drive.google.com/file/d/1kIv502RxQnMer-8HB7zrU_GU7CNPNNDv/view)**
+
+CLIP Features:
+- **[UCF-Crime](https://github.com/nwpu-zxr/VadCLIP)**
+- **[XD-Violence](https://github.com/nwpu-zxr/VadCLIP)**
 
 ---
 
@@ -91,6 +96,7 @@ Our implementation referenced the following codebases:
 
 - [UR-DMU](https://github.com/henrryzh1/UR-DMU)
 - [XDVioDet](https://github.com/Roc-Ng/XDVioDet)
+- [VadCLIP](https://github.com/nwpu-zxr/VadCLIP)
 
 ---
 
