@@ -14,7 +14,7 @@ def parse_args():
     parser.add_argument('--batch_size', type = int, default = 32)
     parser.add_argument('--num_workers', type = int, default = 8)
     parser.add_argument('--num_segments', type = int, default = 64)
-    parser.add_argument('--len_feature', type=int, default = 1024, help = 'length of feature vector, 1152 for RGB+audio')
+    parser.add_argument('--len_feature', type=int, default = 1024, help = 'length of feature vector, 1152 for RGB+audio', 512 for CLIP feature)
     parser.add_argument('--seed', type = int, default = 42, help = 'random seed (-1 for no manual seed)')
     parser.add_argument('--ls_s_w', type=float, default=1, help='ls_i_w')
     parser.add_argument('--ls_v_w', type=float, default=1, help='ls_v_w')
