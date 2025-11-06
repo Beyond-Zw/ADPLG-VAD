@@ -3,6 +3,7 @@ import torch.utils.data as data
 import os
 import numpy as np
 import utils
+from tools import process_feat
 
 
 class UCF_crime(data.DataLoader):
@@ -151,6 +152,82 @@ class XDVideo(data.DataLoader):
         else:
             return video_feature, label, vid_name
         return video_feature, label, vid_name
+
+class XDVideo_CLIP(data.Dataset):
+    def __init__(self, root_dir, mode, modal, num_segments, len_feature, seed=-1, is_normal=None):
+        if seed >= 0:
+            utils.set_seed(seed)
+        self.mode = mode
+        self.modal = modal
+        self.num_segments = num_segments
+        self.len_feature = len_feature
+        self.df = pd.read_csv("/data2/Vision_Group/YZW/ADPLG-VAD/list/CLIP/XD/VadCLIP/xd_CLIP_rgbtest.csv")
+        if self.mode == "Train":
+            self.df = pd.read_csv("/data2/Vision_Group/YZW/ADPLG-VAD/list/CLIP/XD/VadCLIP/xd_CLIP_rgb.csv")
+            if is_normal is True:
+                self.df = self.df.loc[self.df['label'] == 'A']
+                self.df = self.df.reset_index()
+            if is_normal is False:
+                self.df = self.df.loc[self.df['label'] != 'A']
+                self.df = self.df.reset_index()
+
+    def __len__(self):
+        return self.df.shape[0]
+
+    def __getitem__(self, index):
+        clip_path = "/data2/Vision_Group/YZW/ADPLG-VAD/data/XDImgFeatures" + self.df.loc[index]['path'][20:]
+        clip_feature = np.load(clip_path)
+        clip_name = self.df.loc[index]['path'].split('/')[-1].split('.')[0]
+        if self.mode == "Train":
+            clip_feature, clip_length = process_feat(clip_feature, self.num_segments)
+        # else:
+        #     clip_feature, clip_length = process_split(clip_feature, self.num_segments)
+
+        clip_feature = torch.tensor(clip_feature)
+        clip_label = self.df.loc[index]['label']
+        if clip_label == 'A':
+            clip_label = torch.tensor(0.0)
+        else:
+            clip_label = torch.tensor(1.0)
+        return clip_feature, clip_label, clip_name
+
+class XDVideo_CLIP(data.Dataset):
+    def __init__(self, root_dir, mode, modal, num_segments, len_feature, seed=-1, is_normal=None):
+        if seed >= 0:
+            utils.set_seed(seed)
+        self.mode = mode
+        self.modal = modal
+        self.num_segments = num_segments
+        self.len_feature = len_feature
+        self.df = pd.read_csv("/data2/Vision_Group/YZW/ADPLG-VAD/list/CLIP/XD/VadCLIP/xd_CLIP_rgbtest.csv")
+        if self.mode == "Train":
+            self.df = pd.read_csv("/data2/Vision_Group/YZW/ADPLG-VAD/list/CLIP/XD/VadCLIP/xd_CLIP_rgb.csv")
+            if is_normal is True:
+                self.df = self.df.loc[self.df['label'] == 'A']
+                self.df = self.df.reset_index()
+            if is_normal is False:
+                self.df = self.df.loc[self.df['label'] != 'A']
+                self.df = self.df.reset_index()
+
+    def __len__(self):
+        return self.df.shape[0]
+
+    def __getitem__(self, index):
+        clip_path = "/data2/Vision_Group/YZW/ADPLG-VAD/data/XDImgFeatures" + self.df.loc[index]['path'][20:]
+        clip_feature = np.load(clip_path)
+        clip_name = self.df.loc[index]['path'].split('/')[-1].split('.')[0]
+        if self.mode == "Train":
+            clip_feature, clip_length = process_feat(clip_feature, self.num_segments)
+        # else:
+        #     clip_feature, clip_length = process_split(clip_feature, self.num_segments)
+
+        clip_feature = torch.tensor(clip_feature)
+        clip_label = self.df.loc[index]['label']
+        if clip_label == 'A':
+            clip_label = torch.tensor(0.0)
+        else:
+            clip_label = torch.tensor(1.0)
+        return clip_feature, clip_label, clip_name
 
 class XDVideo_per_class(data.DataLoader):
     def __init__(self, root_dir, mode, modal, num_segments, len_feature, seed=-1, is_normal=None):
