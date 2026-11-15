@@ -1,4 +1,4 @@
-# [PR 2026]Attention-Driven Pseudo-Label Self-Training for Weakly Supervised Video Anomaly Detection
+# Attention-Driven Pseudo-Label Self-Training for Weakly Supervised Video Anomaly Detection
 
 This repository contains the official implementation of the paper:
 
